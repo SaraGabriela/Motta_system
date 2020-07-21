@@ -17,6 +17,8 @@ class CreateDocumentTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
+            $table->index(['deleted_at']);
         });
     }
 

@@ -14,6 +14,7 @@ class RelationManifiCusto extends Migration
     public function up()
     {
         Schema::table('manifests', function(Blueprint $table) {
+            
             if (!Schema::hasColumn('manifests', 'id_user')) {
                 $table->integer('id_user')->unsigned()->nullable();
                 $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
@@ -27,8 +28,10 @@ class RelationManifiCusto extends Migration
             if (!Schema::hasColumn('manifests', 'id_typedocument')) {
                 $table->integer('id_typedocument')->unsigned()->nullable();
                 $table->foreign('id_typedocument')->references('id')->on('document_types')->onDelete('cascade');
-                }    
+                }
+
         });
+
     }
 
     /**
