@@ -112,6 +112,10 @@ Route::group(['middleware' => ['auth', 'check_invitation'], 'prefix' => 'admin',
     Route::post('manifestcustomers_restore/{id}', ['uses' => 'Admin\ManifestCustomersController@restore', 'as' => 'manifestcustomers.restore']);
     Route::delete('manifestcustomers_perma_del/{id}', ['uses' => 'Admin\ManifestCustomersController@perma_del', 'as' => 'manifestcustomers.perma_del']);
 
+    Route::resource('document_types', 'Admin\Document_typesController');
+    Route::post('document_types_mass_destroy', ['uses' => 'Admin\Document_typesController@massDestroy', 'as' => 'document_types.mass_destroy']);
+    Route::post('document_types_restore/{id}', ['uses' => 'Admin\Document_typesController@restore', 'as' => 'document_types.restore']);
+    Route::delete('document_types_perma_del/{id}', ['uses' => 'Admin\Document_typesController@perma_del', 'as' => 'document_types.perma_del']);
 
     Route::resource('tenants', 'Admin\TenantsController');
 });
