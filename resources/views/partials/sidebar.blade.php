@@ -217,28 +217,41 @@
             @endcan
 
             @can('administrador')
-                <li class="{{ $request->segment(2) == 'customer_addresses' ? 'active' : '' }}">
-                    <a href="{{ route('admin.customer_addresses.index') }}">
-                        <i class="fa fa-gears"></i> 
-                        <span class="title">@lang('Direcciones')</span>
-                    </a>
-                </li>
-        
-                <li class="{{ $request->segment(2) == 'manifestcustomer' ? 'active' : '' }}">
-                    <a href="{{ route('admin.manifestcustomers.index') }}">
-                        <i class="fa fa-gears"></i>
-                        <span class="title">@lang('Clientes')</span>
-                    </a>
-                </li>
-                
-                <li class="{{ $request->segment(2) == 'document_type' ? 'active' : '' }}">
+            <li class="{{ $request->segment(2) == 'manifests' ? 'active' : '' }}">
+                <a href="{{ route('admin.manifests.index') }}">
+                    <i class="fa fa-gears"></i> 
+                    <span class="title">@lang('Documentos')</span>
+                </a>
+            </li>
+            @endcan
+
+            @can('administrador')
+            <li class="{{ $request->segment(2) == 'customer_addresses' ? 'active' : '' }}">
+                <a href="{{ route('admin.customer_addresses.index') }}">
+                    <i class="fa fa-gears"></i> 
+                    <span class="title">@lang('Direcciones')</span>
+                </a>
+            </li>
+            @endcan
+
+            @can('administrador')
+
+            <li class="{{ $request->segment(2) == 'manifestcustomer' ? 'active' : '' }}">
+                <a href="{{ route('admin.manifestcustomers.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('Clientes')</span>
+                </a>
+            </li>
+
+            @endcan
+
+            @can('administrador')
+            <li class="{{ $request->segment(2) == 'document_type' ? 'active' : '' }}">
                     <a href="{{ route('admin.document_types.index') }}">
                         <i class="fa fa-gears"></i>
                         <span class="title">@lang('Tipo de Documento')</span>
                     </a>
                 </li>
-
-            @endcan
 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{ route('auth.change_password') }}">
@@ -246,6 +259,7 @@
                     <span class="title">@lang('global.app_change_password')</span>
                 </a>
             </li>
+            @endcan
 
             <li>
                 <a href="#logout" onclick="$('#logout').submit();">

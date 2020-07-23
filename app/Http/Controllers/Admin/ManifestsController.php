@@ -54,8 +54,10 @@ class ManifestsController extends Controller
         }
         
         $user = \App\User::get()->pluck('name', 'id');
+        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+        $document_type = \App\Document_type::get()->pluck('name', 'id');
 
-        return view('admin.manifests.create', compact('user'));
+        return view('admin.manifests.create', compact('user','manifestcustomer','document_type'));
     }
 
     /**
@@ -74,6 +76,8 @@ class ManifestsController extends Controller
         $request  = $this->saveFiles($request);
         $manifest = Manifest::create($request->all());
 
+
+
         return redirect()->route('admin.manifests.index');
     }
 
@@ -90,9 +94,12 @@ class ManifestsController extends Controller
         }
 
         $user = \App\User::get()->pluck('name', 'id');
+        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+        $document_type = \App\Document_type::get()->pluck('name', 'id');
+
         $manifest   = Manifest::findOrFail($id);
 
-        return view('admin.manifests.edit', compact('manifest', 'user'));
+        return view('admin.manifests.edit', compact('manifest', 'user','manifestcustomer','document_type'));
     }
 
     /**

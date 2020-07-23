@@ -23,12 +23,8 @@ class UpdateManifestsRequest extends FormRequest
     public function rules()
     {
         return [
-            'document_type' => 'required',
-            'attached' => 'required',
-            'creation_date' => 'required',
+            'document_code' => 'required',
             'pick_date' => 'required',
-            'id_user ' => 'required',
-            'id_customer' => 'required',
         ];
     }
 }
