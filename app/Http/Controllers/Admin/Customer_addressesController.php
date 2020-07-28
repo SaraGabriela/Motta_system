@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Customer_address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -22,12 +23,12 @@ class Customer_addressesController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
         if (request('show_deleted') == 1) {
-            if (! Gate::allows('administrador')) {
+            if (! Gate::allows('manifiestos')) {
                 return abort(401);
             }
 
@@ -46,7 +47,7 @@ class Customer_addressesController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
         
@@ -65,7 +66,7 @@ class Customer_addressesController extends Controller
      */
     public function store(StoreCustomer_addressesRequest $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -83,7 +84,7 @@ class Customer_addressesController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -103,7 +104,7 @@ class Customer_addressesController extends Controller
      */
     public function update(UpdateCustomer_addressesRequest $request, $id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -123,7 +124,7 @@ class Customer_addressesController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -141,7 +142,7 @@ class Customer_addressesController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -158,7 +159,7 @@ class Customer_addressesController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -179,7 +180,7 @@ class Customer_addressesController extends Controller
      */
     public function massQR(Request $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -202,7 +203,7 @@ class Customer_addressesController extends Controller
      */
     public function restore($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -220,7 +221,7 @@ class Customer_addressesController extends Controller
      */
     public function perma_del($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 

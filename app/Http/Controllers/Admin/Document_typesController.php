@@ -20,12 +20,12 @@ class Document_typesController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
         if (request('show_deleted') == 1) {
-            if (! Gate::allows('administrador')) {
+            if (! Gate::allows('manifiestos_cliente')) {
                 return abort(401);
             }
             $document_types = Document_type::onlyTrashed()->get();
@@ -43,7 +43,7 @@ class Document_typesController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -58,7 +58,7 @@ class Document_typesController extends Controller
      */
     public function store(StoreDocument_typesRequest $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
         $request  = $this->saveFiles($request);
@@ -75,7 +75,7 @@ class Document_typesController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -93,7 +93,7 @@ class Document_typesController extends Controller
      */
     public function update(UpdateDocument_typesRequest $request, $id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
         $request  = $this->saveFiles($request);
@@ -112,7 +112,7 @@ class Document_typesController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -130,7 +130,7 @@ class Document_typesController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -147,7 +147,7 @@ class Document_typesController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -169,7 +169,7 @@ class Document_typesController extends Controller
 
     public function restore($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -188,7 +188,7 @@ class Document_typesController extends Controller
     
     public function perma_del($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 

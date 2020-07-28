@@ -61,7 +61,7 @@
             @endcan
             @can('administrador')
 
-                <li class="{{ $request->segment(2) == 'bath' ? 'active' : '' }}">
+                <li class="{{ $request->segment(2) == 'bath' ? 'active' : '' }}" name="Banos">
                     <a href="{{ route('admin.baths.index') }}">
                         <i class="fa fa-gears"></i>
                         <span class="title">@lang('Baños')</span>
@@ -216,7 +216,43 @@
             </li>
             @endcan
 
-            @can('administrador')
+
+            @can('manifiestos')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <span class="title">@lang('Clientes')</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                
+
+               
+                <li class="{{ $request->segment(2) == 'manifestcustomer' ? 'active' : '' }}">
+                    <a href="{{ route('admin.manifestcustomers.index') }}">
+                        <i class="fa fa-gears"></i>
+                        <span class="title">@lang('Clientes')</span>
+                    </a>
+                </li>
+                <li class="{{ $request->segment(2) == 'customer_addresses' ? 'active' : '' }}">
+                    <a href="{{ route('admin.customer_addresses.index') }}">
+                        <i class="fa fa-gears"></i> 
+                        <span class="title">@lang('Direcciones')</span>
+                    </a>
+                </li>
+                
+
+                </ul>
+            </li>
+            @endcan
+
+
+
+
+
+            @can('manifiestos_cliente')
             <li class="{{ $request->segment(2) == 'manifests' ? 'active' : '' }}">
                 <a href="{{ route('admin.manifests.index') }}">
                     <i class="fa fa-gears"></i> 
@@ -225,33 +261,20 @@
             </li>
             @endcan
 
-            @can('administrador')
-            <li class="{{ $request->segment(2) == 'customer_addresses' ? 'active' : '' }}">
-                <a href="{{ route('admin.customer_addresses.index') }}">
-                    <i class="fa fa-gears"></i> 
-                    <span class="title">@lang('Direcciones')</span>
-                </a>
-            </li>
-            @endcan
-
-            @can('administrador')
-
-            <li class="{{ $request->segment(2) == 'manifestcustomer' ? 'active' : '' }}">
-                <a href="{{ route('admin.manifestcustomers.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span class="title">@lang('Clientes')</span>
-                </a>
-            </li>
-
-            @endcan
-
-            @can('administrador')
+            @can('manifiestos')
+           
             <li class="{{ $request->segment(2) == 'document_type' ? 'active' : '' }}">
                     <a href="{{ route('admin.document_types.index') }}">
                         <i class="fa fa-gears"></i>
                         <span class="title">@lang('Tipo de Documento')</span>
                     </a>
                 </li>
+            
+
+
+            @endcan
+
+            @can('administrador')
 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{ route('auth.change_password') }}">
@@ -270,4 +293,3 @@
         </ul>
     </section>
 </aside>
-

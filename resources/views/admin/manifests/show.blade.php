@@ -14,15 +14,15 @@
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th>@lang('Fecha de creación:')</th>
-                            <td field-key='property'>{{ $customer_address->created_at or '' }}</td>
+                            <td field-key='property'>{{ $manifest->created_at or '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('Cliente:')</th>
-                            <td field-key='nombre_del_trabajador'>{{ $customer_address->manifestcustomer->name or '' }}</td>
+                            <td field-key='nombre_del_trabajador'>{{ $manifest->pick_date or '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('Dirección:')</th>
-                            <td field-key='dias_vacaciones'>{{ $customer_address->name_address or '0' }}</td>
+                            <td field-key='dias_vacaciones'>{{ $manifest->manifest_customer->name or '0' }}</td>
                         </tr>
 
                     </table>

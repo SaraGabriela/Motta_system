@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use DB;
+use App\User;
 use App\ManifestCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -20,12 +21,12 @@ class ManifestCustomersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
         if (request('show_deleted') == 1) {
-            if (! Gate::allows('administrador')) {
+            if (! Gate::allows('manifiestos')) {
                 return abort(401);
             }
             $manifestcustomers = ManifestCustomer::onlyTrashed()->get();
@@ -43,9 +44,11 @@ class ManifestCustomersController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
+
+        
 
         return view('admin.manifestcustomers.create');
     }
@@ -58,12 +61,21 @@ class ManifestCustomersController extends Controller
      */
     public function store(StoreManifestCustomersRequest $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
         $request  = $this->saveFiles($request);
         $manifestcustomers = ManifestCustomer::create($request->all());
+
+        $var = DB::table('users')->insertGetId(
+            ['name' => $manifestcustomers->name,'email' => $manifestcustomers->name.'@gmail.com', 'password' => '$2y$10$g1xF0s0kZTPmKo.r89sjJ.oWpteVxOUL.ZchYxDUv2HYH30ImLk4.','company' => $manifestcustomers->name]
+        );
+
+        DB::table('role_user')->insertGetId(
+           ['role_id' => 5, 'user_id' => $var]
+        );
+
 
         return redirect()->route('admin.manifestcustomers.index');
     }
@@ -76,7 +88,7 @@ class ManifestCustomersController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -94,7 +106,7 @@ class ManifestCustomersController extends Controller
      */
     public function update(UpdateManifestCustomersRequest $request, $id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -114,7 +126,7 @@ class ManifestCustomersController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -132,7 +144,7 @@ class ManifestCustomersController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -149,7 +161,7 @@ class ManifestCustomersController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -173,7 +185,7 @@ class ManifestCustomersController extends Controller
      */
     public function restore($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
@@ -191,7 +203,7 @@ class ManifestCustomersController extends Controller
      */
     public function perma_del($id)
     {
-        if (! Gate::allows('administrador')) {
+        if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 

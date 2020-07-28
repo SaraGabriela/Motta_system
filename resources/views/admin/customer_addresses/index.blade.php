@@ -3,7 +3,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('Direccion del cliente')</h3>
-    @can('planilla')
+    @can('manifiestos')
     <p>
         <a href="{{ route('admin.customer_addresses.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
     </p>
@@ -24,10 +24,10 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($customer_addresses) > 0 ? 'datatable' : '' }} @can('planilla') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped {{ count($customer_addresses) > 0 ? 'datatable' : '' }} @can('manifiestos') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        @can('planilla')
+                        @can('manifiestos')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
@@ -45,13 +45,13 @@
                     @if (count($customer_addresses) > 0)
                         @foreach ($customer_addresses as $customer_address)
                             <tr data-entry-id="{{ $customer_address->id }}">
-                                @can('planilla')
+                                @can('manifiestos')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
 
 
                                  <td field-key='name_address'>{{ $customer_address->name_address }}</td>
-                                 <td field-key='name'>{{ $customer_address->manifestCustomer->name }}</td>
+                                 <td field-key='name'>{{ $customer_address->manifestcustomer->name }}</td>
 
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -72,13 +72,13 @@
                                                                 </td>
                                 @else
                                 <td>
-                                    @can('planilla')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.customer_addresses.show',[$customer_address->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
                                     @endcan
-                                    @can('planilla')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.customer_addresses.edit',[$customer_address->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
                                     @endcan
-                                    @can('planilla')
+                                    @can('manifiestos')
 {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
@@ -104,7 +104,7 @@
 
 @section('javascript') 
     <script>
-        @can('planilla')
+        @can('manifiestos')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.customer_addresses.mass_destroy') }}'; @endif
         @endcan
 

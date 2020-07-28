@@ -13,19 +13,6 @@
         <div class="panel-body">
 
             <div class="row">
-                    <div class="col-xs-12 form-group">
-                        {!! Form::label('document_code', trans('Código de documento').'*', ['class' => 'control-label']) !!}
-                        {!! Form::text('document_code', old('document_code'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-                        <p class="help-block"></p>
-                        @if($errors->has('document_code'))
-                            <p class="help-block">
-                                {{ $errors->first('document_code') }}
-                            </p>
-                        @endif
-                    </div>
-            </div>
-
-            <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('id_typedocument', trans('Tipo de documento:').'*', ['class' => 'control-label']) !!}
                     {!! Form::select('id_typedocument', $document_type, old('id_typedocument'), ['class' => 'form-control select2', 'required' => '']) !!}

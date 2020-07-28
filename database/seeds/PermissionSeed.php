@@ -37,6 +37,7 @@ class PermissionSeed extends Seeder
             ['id' => 22, 'title' => 'publico',],
             ['id' => 23, 'title' => 'planilla',],
             ['id' => 24, 'title' => 'manifiestos',],
+            ['id' => 25, 'title' => 'manifiestos_cliente',],
         ];
 
         foreach ($items as $item) {

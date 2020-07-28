@@ -23,7 +23,6 @@ class UpdateManifestsRequest extends FormRequest
     public function rules()
     {
         return [
-            'document_code' => 'required',
             'pick_date' => 'required',
         ];
     }

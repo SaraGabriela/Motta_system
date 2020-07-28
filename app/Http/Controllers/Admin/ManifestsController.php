@@ -22,25 +22,49 @@ class ManifestsController extends Controller
 
     public function index(Request $request)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
         if (request('show_deleted') == 1) {
-            if (! Gate::allows('planilla')) {
+            if (! Gate::allows('manifiestos_cliente')) {
                 return abort(401);
             }
             $manifests = Manifest::onlyTrashed()->get();
 
         } else {
             
-            $manifests = Manifest::all();
-            //dd($manifests);
+            if (Gate::allows('manifiestos')) {
+                $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
+                ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
+                ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
+                ->select('manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                ->get();
+
+
+                return view('admin.manifests.index', compact('manifests'));
+            }
+            
+            $user = \Auth::user();
+            $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
+            ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
+            ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
+            ->select('manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+            ->where('manifest_customers.name','=', $user->company)
+            ->get();
+
+            $fechas = Manifest::whereBetween('created_at', [$request->get('from'), $request->get('to')])->get(); 
+
+
+
+
             
         }
 
-        return view('admin.manifests.index', compact('manifests'));
+        return view('admin.manifests.index', compact('manifests','fechas'));
     }
+
+
 
     /**
      * Show the form for creating new Manifest.
@@ -49,7 +73,7 @@ class ManifestsController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
         
@@ -69,7 +93,7 @@ class ManifestsController extends Controller
 
     public function store(StoreManifestsRequest $request)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -89,7 +113,7 @@ class ManifestsController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -111,7 +135,7 @@ class ManifestsController extends Controller
      */
     public function update(UpdateManifestsRequest $request, $id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -132,7 +156,7 @@ class ManifestsController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -150,7 +174,7 @@ class ManifestsController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -167,7 +191,7 @@ class ManifestsController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -189,7 +213,7 @@ class ManifestsController extends Controller
      */
     public function restore($id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 
@@ -207,7 +231,7 @@ class ManifestsController extends Controller
      */
     public function perma_del($id)
     {
-        if (! Gate::allows('planilla')) {
+        if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
 

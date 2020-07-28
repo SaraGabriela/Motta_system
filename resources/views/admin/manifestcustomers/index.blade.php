@@ -3,7 +3,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('Clientes')</h3>
-    @can('administrador')
+    @can('manifiestos')
     <p>
         <a href="{{ route('admin.manifestcustomers.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
         
@@ -24,10 +24,10 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($manifestcustomers) > 0 ? 'datatable' : '' }} @can('administrador') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped {{ count($manifestcustomers) > 0 ? 'datatable' : '' }} @can('manifiestos') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        @can('administrador')
+                        @can('manifiestos')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
@@ -48,7 +48,7 @@
                     @if (count($manifestcustomers) > 0)
                         @foreach ($manifestcustomers as $manifestcustomer)
                             <tr data-entry-id="{{ $manifestcustomer->id }}">
-                                @can('administrador')
+                                @can('manifiestos')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
 
@@ -75,13 +75,13 @@
                                                                 </td>
                                 @else
                                 <td>
-                                    @can('administrador')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.manifestcustomers.show',[$manifestcustomer->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
                                     @endcan
-                                    @can('administrador')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.manifestcustomers.edit',[$manifestcustomer->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
                                     @endcan
-                                    @can('administrador')
+                                    @can('manifiestos')
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
@@ -107,7 +107,7 @@
 
 @section('javascript') 
     <script>
-        @can('administrador')
+        @can('manifiestos')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.manifestcustomers.mass_destroy') }}'; @endif
         @endcan
         
