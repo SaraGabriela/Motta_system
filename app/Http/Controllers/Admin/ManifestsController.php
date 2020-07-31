@@ -35,10 +35,21 @@ class ManifestsController extends Controller
         } else {
             
             if (Gate::allows('manifiestos')) {
+                //dd($request->get('to'));
+                if($request->get('from')  == null && $request->get('to') == null){
+                    $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
+                    ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
+                    ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
+                    ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                    ->get();
+
+
+                    return view('admin.manifests.index', compact('manifests'));
+                }
                 $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-                ->select('manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
                 ->get();
 
 
@@ -46,10 +57,21 @@ class ManifestsController extends Controller
             }
             
             $user = \Auth::user();
+            if($request->get('from')  == null && $request->get('to') == null){
+                $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
+                ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
+                ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
+                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                ->where('manifest_customers.name','=', $user->company)
+                ->get();
+
+
+                return view('admin.manifests.index', compact('manifests'));
+            }
             $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
             ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
             ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-            ->select('manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+            ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
             ->where('manifest_customers.name','=', $user->company)
             ->get();
 
@@ -61,7 +83,7 @@ class ManifestsController extends Controller
             
         }
 
-        return view('admin.manifests.index', compact('manifests','fechas'));
+        return view('admin.manifests.index', compact('manifests'));
     }
 
 
@@ -218,6 +240,7 @@ class ManifestsController extends Controller
         }
 
         $manifest = Manifest::onlyTrashed()->findOrFail($id);
+        
         $manifest->restore();
 
         return redirect()->route('admin.manifests.index');
@@ -234,7 +257,7 @@ class ManifestsController extends Controller
         if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
-
+        
         $manifest = Manifest::onlyTrashed()->findOrFail($id);
         $manifest->forceDelete();
 

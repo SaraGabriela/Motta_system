@@ -68,7 +68,7 @@
                                  <td field-key='manifestcustomer'>{{ $manifest->manifest_customersname }}</td>
                                  <td field-key='pick_date'>{{ $manifest->pick_date }}</td>
                                  <td field-key='attached'>@if($manifest->attached)<a href="{{ asset(env('UPLOAD_PATH').'/' . $manifest->attached) }}" target="_blank">Descargar</a>@endif</td>
-
+                                
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -78,7 +78,7 @@
                                         'route' => ['admin.manifests.restore', $manifest->id])) !!}
                                     {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
                                     {!! Form::close() !!}
-                                                                    {!! Form::open(array(
+                                    {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
