@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('Dirección del Cliente')</h3>
+    <h3 class="page-title">@lang('Documento')</h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -13,25 +13,28 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th>@lang('Fecha de creación:')</th>
-                            <td field-key='property'>{{ $manifest->created_at or '' }}</td>
+                            <th>@lang('Tipo de documento:')</th>
+                            <td field-key='document_type'>{{$manifest->document_type->name or '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('Cliente:')</th>
-                            <td field-key='nombre_del_trabajador'>{{ $manifest->pick_date or '' }}</td>
+                            <td field-key='manifestcustomer'>{{ $manifest->manifestcustomer->name or '' }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('Dirección:')</th>
-                            <td field-key='dias_vacaciones'>{{ $manifest->manifest_customer->name or '0' }}</td>
+                            <th>@lang('Fecha de recojo:')</th>
+                            <td field-key='pick_date'>{{ $manifest->pick_date or '' }}</td>
                         </tr>
-
+                        <tr>
+                            <th>@lang('Adjunto:')</th>
+                            <td field-key='attached'>@if($manifest->attached)<a href="{{ asset(env('UPLOAD_PATH').'/' . $manifest->attached) }}" target="_blank">Descargar</a>@endif</td>
+                        </tr>
                     </table>
                 </div>
             </div>
 
             <p>&nbsp;</p>
 
-            <a href="{{ route('admin.customer_addresses.index') }}" class="btn btn-default">@lang('global.app_back_to_list')</a>
+            <a href="{{ route('admin.manifests.index') }}" class="btn btn-default">@lang('global.app_back_to_list')</a>
         </div>
     </div>
 @stop
