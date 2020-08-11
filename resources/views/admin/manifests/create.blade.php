@@ -23,7 +23,7 @@
                     @endif
                 </div>
             </div>
-
+            
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('id_customer', trans('Cliente:').'*', ['class' => 'control-label']) !!}
@@ -32,6 +32,20 @@
                     @if($errors->has('id_customer'))
                         <p class="help-block">
                             {{ $errors->first('id_customer') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('id_customer_addresses', trans('Dirección:').'*', ['class' => 'control-label']) !!}
+                    {!! Form::select('id_customer_addresses', $customer_addresses, old('id_customer_addresses'), ['class' => 'form-control select2', 'required' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('id_customer_addresses'))
+                        <p class="help-block">
+                            {{ $errors->first('id_customer_addresses') }}
                         </p>
                     @endif
                 </div>

@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Document_type;
+use App\Sector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreDocument_typesRequest;
-use App\Http\Requests\Admin\UpdateDocument_typesRequest;
+use App\Http\Requests\Admin\StoreSectorsRequest;
+use App\Http\Requests\Admin\UpdateSectorsRequest;
 use App\Http\Controllers\Traits\FileUploadTrait;
 
-class Document_typesController extends Controller
+class SectorsController extends Controller
 {
     use FileUploadTrait;
+
     /**
-     * Display a listing of Bath.
+     * Display a listing of Sector.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,16 +29,16 @@ class Document_typesController extends Controller
             if (! Gate::allows('manifiestos')) {
                 return abort(401);
             }
-            $document_types = Document_type::onlyTrashed()->get();
+            $sectors = Sector::onlyTrashed()->get();
         } else {
-            $document_types = Document_type::all();
+            $sectors = Sector::all();
         }
 
-        return view('admin.document_types.index', compact('document_types'));
+        return view('admin.sectors.index', compact('sectors'));
     }
-    
-   /**
-     * Show the form for creating new Bath.
+
+    /**
+     * Show the form for creating new Sector.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,28 +48,30 @@ class Document_typesController extends Controller
             return abort(401);
         }
 
-        return view('admin.document_types.create');
+        return view('admin.sectors.create');
     }
 
-        /**
-     * Store a newly created Bath in storage.
+    /**
+     * Store a newly created Sector in storage.
      *
-     * @param  \App\Http\Requests\StoreDocument_typesRequest $request
+     * @param  \App\Http\Requests\StoreSectorsRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDocument_typesRequest $request)
+    public function store(StoreSectorsRequest $request)
     {
         if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
-        $request  = $this->saveFiles($request);
-        $document_types = Document_type::create($request->all());
 
-        return redirect()->route('admin.document_types.index');
+        $request  = $this->saveFiles($request);
+        $sector = Sector::create($request->all() + ['user_id' => auth()->user()->id]);
+
+        return redirect()->route('admin.sectors.index');
     }
-    
+
+
     /**
-     * Show the form for editing Bath.
+     * Show the form for editing Sector.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -79,33 +82,34 @@ class Document_typesController extends Controller
             return abort(401);
         }
 
-        $document_type = Document_type::findOrFail($id);
+        $sector = Sector::findOrFail($id);
 
-        return view('admin.document_types.edit', compact('document_type'));
+        return view('admin.sectors.edit', compact('sector'));
     }
 
     /**
-     * Update Bath in storage.
+     * Update Sector in storage.
      *
-     * @param  \App\Http\Requests\UpdateDocument_typesRequest $request
+     * @param  \App\Http\Requests\UpdateSectorsRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDocument_typesRequest $request, $id)
+    public function update(UpdateSectorsRequest $request, $id)
     {
         if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
-        $request  = $this->saveFiles($request);
-        $document_type = Document_type::findOrFail($id);
-        $document_type->update($request->all());
 
-        return redirect()->route('admin.document_types.index');
+        $request  = $this->saveFiles($request);
+        $sector = Sector::findOrFail($id);
+        $sector->update($request->all());
+
+        return redirect()->route('admin.sectors.index');
     }
 
 
     /**
-     * Display Bath.
+     * Display Sector.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -116,14 +120,14 @@ class Document_typesController extends Controller
             return abort(401);
         }
 
-        $document_type  = Document_type::findOrFail($id);
+        $sector  = Sector::findOrFail($id);
 
-        return view('admin.document_types.show', compact('document_type'));
+        return view('admin.sectors.show', compact('sector'));
     }
 
 
     /**
-     * Remove Bath from storage.
+     * Remove Sector from storage.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -134,14 +138,14 @@ class Document_typesController extends Controller
             return abort(401);
         }
 
-        $document_type = Document_type::findOrFail($id);
-        $document_type->delete();
+        $sector = Sector::findOrFail($id);
+        $sector->delete();
 
-        return redirect()->route('admin.document_types.index');
+        return redirect()->route('admin.sectors.index');
     }
 
     /**
-     * Delete all selected Bath at once.
+     * Delete all selected Sector at once.
      *
      * @param Request $request
      */
@@ -152,7 +156,7 @@ class Document_typesController extends Controller
         }
 
         if ($request->input('ids')) {
-            $entries = Document_type::whereIn('id', $request->input('ids'))->get();
+            $entries = Sector::whereIn('id', $request->input('ids'))->get();
 
             foreach ($entries as $entry) {
                 $entry->delete();
@@ -160,43 +164,40 @@ class Document_typesController extends Controller
         }
     }
 
+
     /**
-     * Restore Bath from storage.
+     * Restore Sector from storage.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-
     public function restore($id)
     {
         if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
-        $document_type = Document_type::onlyTrashed()->findOrFail($id);
-        $document_type->restore();
+        $sector = Sector::onlyTrashed()->findOrFail($id);
+        $sector->restore();
 
-        return redirect()->route('admin.document_types.index');
+        return redirect()->route('admin.sectors.index');
     }
 
     /**
-     * Permanently delete Bath from storage.
+     * Permanently delete Sector from storage.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    
     public function perma_del($id)
     {
         if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
 
-        $document_type = Document_type::onlyTrashed()->findOrFail($id);
-        $document_type->forceDelete();
+        $sector = Sector::onlyTrashed()->findOrFail($id);
+        $sector->forceDelete();
 
-        return redirect()->route('admin.document_types.index');
+        return redirect()->route('admin.sectors.index');
     }
-
-
 }

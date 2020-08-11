@@ -55,7 +55,8 @@
                                 
                                  <td field-key='name'>{{ $manifestcustomer->name }}</td>
                                  <td field-key='ruc'>{{ $manifestcustomer->ruc }}</td>
-                                 <td field-key='sector'>{{ $manifestcustomer->sector }}</td>
+                                 <td field-key='ruc'>{{ $manifestcustomer->sector->name }}</td>
+                                 
                                  @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

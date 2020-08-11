@@ -23,10 +23,11 @@ class UpdateManifestCustomersRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            'name' => 'required',
+            'name' => 'required', 
             'ruc' => 'required',
-            'sector' => 'required'
+            'contact_phone' => 'nullable',
+            'contact_name' => 'nullable',
+            'id_sector' => 'required',   
         ];
     }
 }

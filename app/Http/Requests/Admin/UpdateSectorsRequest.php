@@ -3,7 +3,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDocument_typesRequest extends FormRequest
+class UpdateSectorsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class StoreDocument_typesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:document_types,name',  
+            
+            'name' => 'required|unique:sectors,name', 
 
         ];
     }

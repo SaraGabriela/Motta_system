@@ -17,13 +17,18 @@
                              <th>@lang('Nombre')</th>
                             <td field-key='nombre'>{{ $manifestcustomer->name }}</td>
                         </tr>
+
                         <tr>
                              <th>@lang('Ruc')</th>
                             <td field-key='ruc'>{{ $manifestcustomer->ruc }}</td>
                         </tr>
                         <tr>
-                             <th>@lang('Sector')</th>
-                            <td field-key='sector'>{{ $manifestcustomer->sector }}</td>
+                             <th>@lang('Contacto:')</th>
+                            <td field-key='contact_name'>{{ $manifestcustomer->contact_name }}</td>
+                        </tr>
+                        <tr>
+                             <th>@lang('Telefono:')</th>
+                            <td field-key='contact_name'>{{ $manifestcustomer->contact_phone }}</td>
                         </tr>
 
                     </table>

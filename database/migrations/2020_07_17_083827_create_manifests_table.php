@@ -16,8 +16,8 @@ class CreateManifestsTable extends Migration
     {
         Schema::create('manifests', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code');
             $table->string('attached');
-
             $table->date('pick_date');
             $table->timestamps();
             $table->softDeletes();

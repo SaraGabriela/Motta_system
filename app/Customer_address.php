@@ -29,4 +29,5 @@ class Customer_address extends Model
         return $this->belongsTo(ManifestCustomer::class, 'id_customers')->withTrashed();
     }
 
+
 }

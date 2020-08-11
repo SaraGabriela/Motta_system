@@ -24,6 +24,7 @@ class StoreManifestsRequest extends FormRequest
     {
         return [
             'pick_date' => 'required',
+            'attached' => 'nullable|mimes:rar,zip,pdf',
         ];
     }
 }

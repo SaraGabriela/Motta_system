@@ -23,7 +23,7 @@ class UpdateDocument_typesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required|unique:document_types,name',  
         ];
     }
 }

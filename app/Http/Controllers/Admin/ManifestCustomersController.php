@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreManifestCustomersRequest;
 use App\Http\Requests\Admin\UpdateManifestCustomersRequest;
 use App\Http\Controllers\Traits\FileUploadTrait;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class ManifestCustomersController extends Controller
 {
@@ -48,9 +50,9 @@ class ManifestCustomersController extends Controller
             return abort(401);
         }
 
-        
+        $sector = \App\Sector::get()->pluck('name', 'id');
 
-        return view('admin.manifestcustomers.create');
+        return view('admin.manifestcustomers.create', compact('sector'));
     }
 
         /**
@@ -67,9 +69,12 @@ class ManifestCustomersController extends Controller
 
         $request  = $this->saveFiles($request);
         $manifestcustomers = ManifestCustomer::create($request->all());
+        $manifestcustiname = str_replace(' ', '',Str::lower($manifestcustomers->name));
+
+        $password = Hash::make($manifestcustomers->ruc);
 
         $var = DB::table('users')->insertGetId(
-            ['name' => $manifestcustomers->name,'email' => $manifestcustomers->name.'@gmail.com', 'password' => '$2y$10$g1xF0s0kZTPmKo.r89sjJ.oWpteVxOUL.ZchYxDUv2HYH30ImLk4.','company' => $manifestcustomers->name]
+            ['name' => $manifestcustomers->name,'email' => $manifestcustiname.'@serviciosmotta.com', 'password' => $password ,'company' => $manifestcustomers->name,'manifest_customers_id' => $manifestcustomers->id]
         );
 
         DB::table('role_user')->insertGetId(
@@ -94,7 +99,9 @@ class ManifestCustomersController extends Controller
 
         $manifestcustomer = ManifestCustomer::findOrFail($id);
 
-        return view('admin.manifestcustomers.edit', compact('manifestcustomer'));
+        $sector = \App\Sector::get()->pluck('name', 'id');
+
+        return view('admin.manifestcustomers.edit', compact('manifestcustomer','sector'));
     }
 
     /**

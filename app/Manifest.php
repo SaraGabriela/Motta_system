@@ -16,7 +16,7 @@ class Manifest extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['id_typedocument','attached','document_code','pick_date','id_user ','id_customer'];
+    protected $fillable = ['id_typedocument','attached','document_code','pick_date','id_user ','id_customer','id_customer_addresses'];
 
      /**
      * Set to null if empty
@@ -62,6 +62,16 @@ class Manifest extends Model
     public function document_type()
     {
         return $this->belongsTo(Document_type::class, 'id_typedocument')->withTrashed();
+    }
+
+    public function setCustomer_addressIdAttribute($input)
+    {
+        $this->attributes['id_customer_addresses'] = $input ? $input : null;
+    }
+
+    public function customer_address()
+    {
+        return $this->belongsTo(Customer_address::class, 'id_customer_addresses')->withTrashed();
     }
 
 }

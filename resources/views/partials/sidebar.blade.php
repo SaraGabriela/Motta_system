@@ -236,6 +236,7 @@
                         <span class="title">@lang('Clientes')</span>
                     </a>
                 </li>
+
                 <li class="{{ $request->segment(2) == 'customer_addresses' ? 'active' : '' }}">
                     <a href="{{ route('admin.customer_addresses.index') }}">
                         <i class="fa fa-gears"></i> 
@@ -243,6 +244,12 @@
                     </a>
                 </li>
                 
+                <li class="{{ $request->segment(2) == 'sector' ? 'active' : '' }}">
+                    <a href="{{ route('admin.sectors.index') }}">
+                        <i class="fa fa-gears"></i>
+                        <span class="title">@lang('Sectores')</span>
+                    </a>
+                </li>
 
                 </ul>
             </li>
@@ -269,8 +276,6 @@
                         <span class="title">@lang('Tipo de Documento')</span>
                     </a>
                 </li>
-            
-
 
             @endcan
 

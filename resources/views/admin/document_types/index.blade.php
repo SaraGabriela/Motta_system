@@ -3,7 +3,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('Tipo Documento')</h3>
-    @can('manifiestos_cliente')
+    @can('manifiestos')
 
     <p> 
         <a href="{{ route('admin.document_types.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
@@ -24,10 +24,10 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($document_types) > 0 ? 'datatable' : '' }} @can('manifiestos_cliente') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped {{ count($document_types) > 0 ? 'datatable' : '' }} @can('manifiestos') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        @can('manifiestos_cliente')
+                        @can('manifiestos')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
@@ -46,7 +46,7 @@
                     @if (count($document_types) > 0)
                         @foreach ($document_types as $document_type)
                             <tr data-entry-id="{{ $document_type->id }}">
-                                @can('manifiestos_cliente')
+                                @can('manifiestos')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
 
@@ -72,13 +72,13 @@
                                                                 </td>
                                 @else
                                 <td>
-                                    @can('manifiestos_cliente')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.document_types.show',[$document_type->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
                                     @endcan
-                                    @can('manifiestos_cliente')
+                                    @can('manifiestos')
                                     <a href="{{ route('admin.document_types.edit',[$document_type->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
                                     @endcan
-                                    @can('manifiestos_cliente')
+                                    @can('manifiestos')
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
@@ -104,7 +104,7 @@
 
 @section('javascript') 
     <script>
-        @can('manifiestos_cliente')
+        @can('manifiestos')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.document_types.mass_destroy') }}'; @endif
         @endcan
         

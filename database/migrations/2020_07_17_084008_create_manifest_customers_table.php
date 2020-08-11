@@ -16,8 +16,9 @@ class CreateManifestCustomersTable extends Migration
         Schema::create('manifest_customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('contact_phone')->nullable();
             $table->string('ruc');
-            $table->string('sector');
+            $table->string('contact_name')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->index(['deleted_at']);

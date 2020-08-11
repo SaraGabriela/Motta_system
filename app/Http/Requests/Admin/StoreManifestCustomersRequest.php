@@ -23,9 +23,11 @@ class StoreManifestCustomersRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required', 
-            'ruc' => 'required',
-            'sector' => 'required'    
+            'name' => 'required|unique:manifest_customers,name', 
+            'ruc' => 'required|unique:manifest_customers,ruc',
+            'contact_phone' => 'nullable', 
+            'contact_name' => 'nullable',
+            'id_sector' => 'required',         
         ];
     }
 }

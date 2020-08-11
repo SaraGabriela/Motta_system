@@ -28,6 +28,10 @@ class RelationManifiCusto extends Migration
                 $table->integer('id_typedocument')->unsigned()->nullable();
                 $table->foreign('id_typedocument')->references('id')->on('document_types')->onDelete('cascade');
                 }    
+            if (!Schema::hasColumn('manifests', 'id_customer_addresses')) {
+                $table->integer('id_customer_addresses')->unsigned()->nullable();
+                $table->foreign('id_customer_addresses')->references('id')->on('customer_addresses')->onDelete('cascade');
+                }        
         });
     }
 

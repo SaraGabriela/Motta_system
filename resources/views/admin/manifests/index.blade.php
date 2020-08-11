@@ -45,8 +45,10 @@
                         @can('manifiestos')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
-                        <th>@lang('Tipo de Documento')</th>
+                        <th>@lang('Codigo')</th>
                         <th>@lang('Cliente')</th>
+                        <th>@lang('RUC')</th>
+                        <th>@lang('Sector')</th>
                         <th>@lang('Fecha de recojo')</th>
                         <th>@lang('Adjunto')</th>
                         @if( request('show_deleted') == 1 )
@@ -64,8 +66,10 @@
                                 @can('manifiestos')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-                                 <td field-key='document_type'>{{ $manifest->document_typesname}}</td>
+                                <td field-key='code'>{{ $manifest->id }}</td>
                                  <td field-key='manifestcustomer'>{{ $manifest->manifest_customersname }}</td>
+                                 <td field-key='pick_date'>{{ $manifest->ruc_customer }}</td>
+                                 <td field-key='manifestcustomer'>{{ $manifest->sector_name }}</td>
                                  <td field-key='pick_date'>{{ $manifest->pick_date }}</td>
                                  <td field-key='attached'>@if($manifest->attached)<a href="{{ asset(env('UPLOAD_PATH').'/' . $manifest->attached) }}" target="_blank">Descargar</a>@endif</td>
                                 

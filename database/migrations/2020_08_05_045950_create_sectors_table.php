@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddInvitationTokenToUsersTable extends Migration
+class CreateSectorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddInvitationTokenToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('invitation_token')->nullable();
+        Schema::create('sectors', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['deleted_at']);
         });
     }
 
@@ -25,6 +29,6 @@ class AddInvitationTokenToUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('sectors');
     }
 }

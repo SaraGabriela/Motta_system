@@ -117,5 +117,10 @@ Route::group(['middleware' => ['auth', 'check_invitation'], 'prefix' => 'admin',
     Route::post('document_types_restore/{id}', ['uses' => 'Admin\Document_typesController@restore', 'as' => 'document_types.restore']);
     Route::delete('document_types_perma_del/{id}', ['uses' => 'Admin\Document_typesController@perma_del', 'as' => 'document_types.perma_del']);
 
+    Route::resource('sectors', 'Admin\SectorsController');
+    Route::post('sectors_mass_destroy', ['uses' => 'Admin\SectorsController@massDestroy', 'as' => 'sectors.mass_destroy']);
+    Route::post('sectors_restore/{id}', ['uses' => 'Admin\SectorsController@restore', 'as' => 'sectors.restore']);
+    Route::delete('sectors_perma_del/{id}', ['uses' => 'Admin\SectorsController@perma_del', 'as' => 'sectors.perma_del']);
+    
     Route::resource('tenants', 'Admin\TenantsController');
 });

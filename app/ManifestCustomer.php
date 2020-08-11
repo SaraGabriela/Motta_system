@@ -5,19 +5,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Bath
+ * Class ManifestCustomer
  *
  * @package App
- * @property string $latitude
- * @property string $longitude
- * @property string $code_qr
+ * @property string $name
+ * @property string $contact_phone
+ * @property string $ruc
 */
 class ManifestCustomer extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name','ruc','sector'];
+    protected $fillable = ['name','contact_phone','ruc','contact_name','id_sector'];
     
-    
-    
+
+    public function setSectorIdAttribute($input)
+    {
+        $this->attributes['id_sector'] = $input ? $input : null;
+    }
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class, 'id_sector')->withTrashed();
+    }
 }

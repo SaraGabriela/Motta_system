@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use DB;
 use App\Manifest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -40,16 +40,17 @@ class ManifestsController extends Controller
                     $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
                     ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                     ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-                    ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                    ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
+                    ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
                     ->get();
-
 
                     return view('admin.manifests.index', compact('manifests'));
                 }
                 $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
+                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
                 ->get();
 
 
@@ -61,7 +62,8 @@ class ManifestsController extends Controller
                 $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+                ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
+                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
                 ->where('manifest_customers.name','=', $user->company)
                 ->get();
 
@@ -71,7 +73,8 @@ class ManifestsController extends Controller
             $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
             ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
             ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
-            ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname')
+            ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
+            ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
             ->where('manifest_customers.name','=', $user->company)
             ->get();
 
@@ -100,10 +103,13 @@ class ManifestsController extends Controller
         }
         
         $user = \App\User::get()->pluck('name', 'id');
-        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+       
         $document_type = \App\Document_type::get()->pluck('name', 'id');
 
-        return view('admin.manifests.create', compact('user','manifestcustomer','document_type'));
+        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+        $customer_addresses = \App\Customer_address::get()->pluck('name_address', 'id');
+
+        return view('admin.manifests.create', compact('user','manifestcustomer','document_type','customer_addresses'));
     }
 
     /**
@@ -181,7 +187,7 @@ class ManifestsController extends Controller
         if (! Gate::allows('manifiestos_cliente')) {
             return abort(401);
         }
-
+        
         $manifest = Manifest::findOrFail($id);
 
         return view('admin.manifests.show', compact('manifest'));
