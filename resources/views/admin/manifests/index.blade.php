@@ -95,7 +95,7 @@
                                     @can('manifiestos_cliente')
                                     <a href="{{ route('admin.manifests.show',[$manifest->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
                                     @endcan
-                                    @can('manifiestos')
+                                    @can('administrador')
                                     <a href="{{ route('admin.manifests.edit',[$manifest->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
                                     @endcan
                                     @can('manifiestos')

@@ -13,7 +13,6 @@ trait FileUploadTrait
      */
     public function saveFiles(Request $request)
     {
-
 		$uploadPath = public_path(env('UPLOAD_PATH'));
 		$thumbPath = public_path(env('UPLOAD_PATH').'/thumb');
         if (! file_exists($uploadPath)) {
