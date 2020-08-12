@@ -19,9 +19,15 @@
                         </tr>
 
                         <tr>
+                             <th>@lang('Email')</th>
+                            <td field-key='ruc'>{{ $users->first()->email }}</td>
+                        </tr>
+
+                        <tr>
                              <th>@lang('Ruc')</th>
                             <td field-key='ruc'>{{ $manifestcustomer->ruc }}</td>
                         </tr>
+
                         <tr>
                              <th>@lang('Contacto:')</th>
                             <td field-key='contact_name'>{{ $manifestcustomer->contact_name }}</td>

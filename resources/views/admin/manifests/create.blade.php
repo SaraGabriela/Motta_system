@@ -13,6 +13,19 @@
 
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('code', trans('Codigo:'), ['class' => 'control-label']) !!}
+                    {!! Form::text('code', old('code'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('code'))
+                        <p class="help-block">
+                            {{ $errors->first('code') }}
+                        </p>
+                    @endif
+                </div>
+            </div>  
+
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('id_typedocument', trans('Tipo de documento:').'*', ['class' => 'control-label']) !!}
                     {!! Form::select('id_typedocument', $document_type, old('id_typedocument'), ['class' => 'form-control select2', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -24,11 +37,13 @@
                 </div>
             </div>
             
+
+
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('id_customer', trans('Cliente:').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('id_customer', $manifestcustomer, old('id_customer'), ['class' => 'form-control select2', 'required' => '']) !!}
-                    <p class="help-block"></p>
+                        {!! Form::label('id_customer', trans('Cliente:').'*', ['class' => 'control-label']) !!}
+                        {!! Form::select('id_customer', $manifestcustomer, old('id_customer'), ['class' => 'form-control select2', 'required' => '']) !!}
+                        <p class="help-block"></p>
                     @if($errors->has('id_customer'))
                         <p class="help-block">
                             {{ $errors->first('id_customer') }}
@@ -37,19 +52,17 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('id_customer_addresses', trans('Dirección:').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('id_customer_addresses', $customer_addresses, old('id_customer_addresses'), ['class' => 'form-control select2', 'required' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('id_customer_addresses'))
-                        <p class="help-block">
-                            {{ $errors->first('id_customer_addresses') }}
-                        </p>
-                    @endif
+                        {!! Form::label('id_customer_addresses', trans('Dirección:').'*', ['class' => 'control-label']) !!}
+                        {!! Form::select('id_customer_addresses',$manifestadress,old('id_customer_addresses'), ['class' => 'form-control select2', 'required' => '']) !!}
                 </div>
             </div>
+
+            
+
+
+
 
             <div class="row">
                     <div class="col-xs-12 form-group">
@@ -78,11 +91,51 @@
                     @endif
                 </div>
             </div> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+    <script type="text/javascript">
 
+    jQuery(document).ready(function ()
+    {
+ 
+            jQuery('select[name="id_customer"]').on('change',function(){
+                
+               var countryID = jQuery(this).val();
+               
+               if(countryID)
+               {
+                  jQuery.ajax({
+                     url : 'dropdownlist/getstates/' +countryID,
+                     type : "GET",
+                     dataType : "json",
+                     
+                     success:function(data)
+                     {
+                        jQuery('select[name="id_customer_addresses"]').empty();
+                        
+                        jQuery.each(data, function(key,value){
+                            
+                            $('select[name="id_customer_addresses"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                     },
+                     
+                  });
+               }
+               else
+               {
+                  $('select[name="id_customer_addresses"]').empty();
+               }
+            });
+    });
+</script>
         </div>
+        <head>
+
+</head>
+ 
     </div>
 
     {!! Form::submit(trans('global.app_save'), ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
 @stop
+
 

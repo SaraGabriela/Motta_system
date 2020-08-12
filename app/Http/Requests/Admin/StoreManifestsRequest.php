@@ -23,6 +23,7 @@ class StoreManifestsRequest extends FormRequest
     public function rules()
     {
         return [
+            'code' => 'required|unique:manifests,code', 
             'pick_date' => 'required',
             'attached' => 'nullable|mimes:rar,zip,pdf',
         ];

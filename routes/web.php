@@ -122,5 +122,9 @@ Route::group(['middleware' => ['auth', 'check_invitation'], 'prefix' => 'admin',
     Route::post('sectors_restore/{id}', ['uses' => 'Admin\SectorsController@restore', 'as' => 'sectors.restore']);
     Route::delete('sectors_perma_del/{id}', ['uses' => 'Admin\SectorsController@perma_del', 'as' => 'sectors.perma_del']);
     
+    Route::get('manifests/dropdownlist/getstates/{id}', ['uses' => 'Admin\ManifestsController@getStates']);
+    Route::get('manifests/dropdownlist/getstate/{id}', ['uses' => 'Admin\ManifestsController@getState']);
+    //Route::get('dropdownlist/getstates/{id}','ManifestsController@getStates');
+
     Route::resource('tenants', 'Admin\TenantsController');
 });

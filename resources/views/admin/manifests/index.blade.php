@@ -66,7 +66,7 @@
                                 @can('manifiestos')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-                                <td field-key='code'>{{ $manifest->id }}</td>
+                                <td field-key='code'>{{ $manifest->code }}</td>
                                  <td field-key='manifestcustomer'>{{ $manifest->manifest_customersname }}</td>
                                  <td field-key='pick_date'>{{ $manifest->ruc_customer }}</td>
                                  <td field-key='manifestcustomer'>{{ $manifest->sector_name }}</td>

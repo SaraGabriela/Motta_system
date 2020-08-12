@@ -16,7 +16,7 @@ class Manifest extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['id_typedocument','attached','document_code','pick_date','id_user ','id_customer','id_customer_addresses'];
+    protected $fillable = ['id_typedocument','code','attached','document_code','pick_date','id_user ','id_customer','id_customer_addresses'];
 
      /**
      * Set to null if empty

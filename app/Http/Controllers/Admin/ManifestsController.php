@@ -41,7 +41,7 @@ class ManifestsController extends Controller
                     ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                     ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
                     ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-                    ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
+                    ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
                     ->get();
 
                     return view('admin.manifests.index', compact('manifests'));
@@ -50,7 +50,7 @@ class ManifestsController extends Controller
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
                 ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
                 ->get();
 
 
@@ -63,7 +63,7 @@ class ManifestsController extends Controller
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
                 ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-                ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
                 ->where('manifest_customers.name','=', $user->company)
                 ->get();
 
@@ -74,7 +74,7 @@ class ManifestsController extends Controller
             ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
             ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
             ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-            ->select('manifests.id','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+            ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
             ->where('manifest_customers.name','=', $user->company)
             ->get();
 
@@ -89,7 +89,16 @@ class ManifestsController extends Controller
         return view('admin.manifests.index', compact('manifests'));
     }
 
-
+    public function getStates($id) 
+    {        
+            $states = DB::table("customer_addresses")->where("id_customers",$id)->pluck("name_address","id");
+            return json_encode($states);
+    }
+    public function getState($id) 
+    {        
+            $states = DB::table("customer_addresses")->where("id_customers",$id)->pluck("name_address","id");
+            return json_encode($states);
+    }
 
     /**
      * Show the form for creating new Manifest.
@@ -106,11 +115,18 @@ class ManifestsController extends Controller
        
         $document_type = \App\Document_type::get()->pluck('name', 'id');
 
-        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
-        $customer_addresses = \App\Customer_address::get()->pluck('name_address', 'id');
+        $manifestcustomer = \App\ManifestCustomer::select(
+        DB::raw("CONCAT(name,' ',ruc) AS nameruc"),'id')
+        ->pluck('nameruc', 'id');
 
-        return view('admin.manifests.create', compact('user','manifestcustomer','document_type','customer_addresses'));
+
+        $manifestadress = \App\Customer_address::get()->pluck('name_address', 'id');
+
+        //$this->prueba();
+
+        return view('admin.manifests.create', compact('user','manifestcustomer','document_type','manifestadress'));
     }
+
 
     /**
      * Store a newly created Manifest in storage.
@@ -146,8 +162,13 @@ class ManifestsController extends Controller
         }
 
         $user = \App\User::get()->pluck('name', 'id');
-        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+       
         $document_type = \App\Document_type::get()->pluck('name', 'id');
+
+        $manifestcustomer = \App\ManifestCustomer::select(
+        DB::raw("CONCAT(name,' ',ruc) AS nameruc"),'id')
+        ->pluck('nameruc', 'id');
+
 
         $manifest   = Manifest::findOrFail($id);
 

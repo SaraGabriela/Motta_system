@@ -139,7 +139,9 @@ class ManifestCustomersController extends Controller
 
         $manifestcustomer  = ManifestCustomer::findOrFail($id);
 
-        return view('admin.manifestcustomers.show', compact('manifestcustomer'));
+        $users = \App\User::where('manifest_customers_id', '=', $id)->get();
+
+        return view('admin.manifestcustomers.show', compact('manifestcustomer','users'));
     }
 
 

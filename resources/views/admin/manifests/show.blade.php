@@ -12,6 +12,10 @@
             <div class="row">
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
+                    <tr>
+                             <th>@lang('Codigo')</th>
+                            <td field-key='code'>{{ $manifest->code }}</td>
+                        </tr>
                         <tr>
                             <th>@lang('Tipo de documento:')</th>
                             <td field-key='document_type'>{{$manifest->document_type->name or '' }}</td>
@@ -19,6 +23,10 @@
                         <tr>
                             <th>@lang('Cliente:')</th>
                             <td field-key='manifestcustomer'>{{ $manifest->manifestcustomer->name or '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('Dirección:')</th>
+                            <td field-key='manifestcustomer'>{{ $manifest->customer_address->name_address or '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('Fecha de recojo:')</th>
