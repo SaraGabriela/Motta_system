@@ -28,10 +28,10 @@
                                value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">@lang('global.app_email')</label>
+                            <label class="col-md-4 control-label">@lang('Usuario')</label>
 
                             <div class="col-md-6">
-                                <input type="email"
+                                <input type="text"
                                        class="form-control"
                                        name="email"
                                        value="{{ old('email') }}">
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">@lang('global.app_password')</label>
+                            <label class="col-md-4 control-label">@lang('Contraseña')</label>
 
                             <div class="col-md-6">
                                 <input type="password"
@@ -48,17 +48,6 @@
                             </div>
                         </div>
 
-
-
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <label>
-                                    <input type="checkbox"
-                                           name="remember"> @lang('global.app_remember_me')
-                                </label>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -46,11 +46,11 @@ class ManifestsController extends Controller
 
                     return view('admin.manifests.index', compact('manifests'));
                 }
-                $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
+                $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
                 ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
                 ->get();
 
 
@@ -63,18 +63,18 @@ class ManifestsController extends Controller
                 ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
                 ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
                 ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+                ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
                 ->where('manifest_customers.name','=', $user->company)
                 ->get();
 
 
                 return view('admin.manifests.index', compact('manifests'));
             }
-            $manifests = Manifest::whereBetween('manifests.created_at', [$request->get('from'), $request->get('to')])
+            $manifests = Manifest::whereBetween('manifests.created_at', ['1999-01-01', '2999-01-01'])
             ->join('manifest_customers', 'manifest_customers.id', '=', 'manifests.id_customer')
             ->join('document_types', 'manifests.id_typedocument', '=', 'document_types.id')
             ->join('sectors', 'manifest_customers.id_sector', '=', 'sectors.id')
-            ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name')
+            ->select('manifests.id','manifests.code','manifest_customers.name as manifest_customersname','manifests.attached','manifests.pick_date','document_types.name as document_typesname','sectors.name as sector_name','manifest_customers.ruc as ruc_customer')
             ->where('manifest_customers.name','=', $user->company)
             ->get();
 

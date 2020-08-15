@@ -69,12 +69,14 @@ class ManifestCustomersController extends Controller
 
         $request  = $this->saveFiles($request);
         $manifestcustomers = ManifestCustomer::create($request->all());
-        $manifestcustiname = str_replace(' ', '',Str::lower($manifestcustomers->name));
+        $manifestcustinamecompa = str_replace(' ', '',Str::lower($manifestcustomers->name));
 
-        $password = Hash::make($manifestcustomers->ruc);
+        $manifestcustiname = substr(Str::lower($manifestcustomers->name),0,1);
+
+        $password = Hash::make($manifestcustomers->ruc.$manifestcustiname);
 
         $var = DB::table('users')->insertGetId(
-            ['name' => $manifestcustomers->name,'email' => $manifestcustiname.'@serviciosmotta.com', 'password' => $password ,'company' => $manifestcustomers->name,'manifest_customers_id' => $manifestcustomers->id]
+            ['name' => $manifestcustomers->name,'email' => $manifestcustomers->ruc, 'password' => $password ,'company' => $manifestcustomers->name,'manifest_customers_id' => $manifestcustomers->id]
         );
 
         DB::table('role_user')->insertGetId(

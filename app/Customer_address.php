@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 */
 class Customer_address extends Model
 {
-    
     use SoftDeletes;
 
     protected $fillable = ['name_address','id_customers'];

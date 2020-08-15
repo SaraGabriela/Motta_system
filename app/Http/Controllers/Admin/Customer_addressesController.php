@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-
+use DB;
 use App\Customer_address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -50,8 +50,10 @@ class Customer_addressesController extends Controller
         if (! Gate::allows('manifiestos')) {
             return abort(401);
         }
-        
-        $manifestcustomer = \App\ManifestCustomer::get()->pluck('name', 'id');
+
+        $manifestcustomer = \App\ManifestCustomer::select(
+            DB::raw("CONCAT(name,' ',ruc) AS nameruc"),'id')
+            ->pluck('nameruc', 'id');
 
         return view('admin.customer_addresses.create', compact('manifestcustomer'));
     }
